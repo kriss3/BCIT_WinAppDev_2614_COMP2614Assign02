@@ -10,12 +10,17 @@ namespace COMP2614Assign02
 	{
 		static void Main(string[] args)
 		{
-			
+			Run();
 		}
 
 		public static void Run()
 		{
 			Helper myHelper = new Helper();
+			myHelper.printHeader();
+			var inputData = myHelper.getUserInput();
+			var data = myHelper.getData(inputData);
+			myHelper.printFooter();
+			myHelper.printResult(data);
 		}
 	}
 }
