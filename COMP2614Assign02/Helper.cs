@@ -121,7 +121,7 @@ namespace COMP2614Assign02
 			{
 				Console.WriteLine($"{c.FirstName} {c.LastName}");
 				Console.WriteLine(c.Address);
-				Console.WriteLine($"{c.City} {c.Province.ToUpper()}  {c.PostalCode}");
+				Console.WriteLine($"{c.City} {c.Province.ToUpper()}  {c.PostalCode.ToUpper()}");
 			}
 			else
 			{
