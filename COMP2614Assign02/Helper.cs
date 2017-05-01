@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace COMP2614Assign02
 {
@@ -36,8 +37,17 @@ namespace COMP2614Assign02
 			sb.Append(Console.ReadLine() + "|");
 			Console.Write("Province:\t");
 			sb.Append(Console.ReadLine() + "|");
-			Console.Write("Post Code:\t");
-			sb.Append(Console.ReadLine());
+
+			var pc = String.Empty;
+			do
+			{
+				Console.Write("Post Code:\t");
+				pc = Console.ReadLine();
+
+			} while (!isValidPostCode(pc.ToUpper()));
+
+			sb.Append(pc);
+			
 			return sb.ToString();
 		}
 
@@ -111,13 +121,35 @@ namespace COMP2614Assign02
 			{
 				Console.WriteLine($"{c.FirstName} {c.LastName}");
 				Console.WriteLine(c.Address);
-				Console.WriteLine($"{c.City} {c.Province.ToUpper()}  {c.PostalCode.ToUpper()}");
+				Console.WriteLine($"{c.City} {c.Province.ToUpper()}  {c.PostalCode}");
 			}
 			else
 			{
 				Console.WriteLine("Something went wrong, input data empty");
 			}
 			
+		}
+
+		private bool isValidPostCode(string pc)
+		{
+			bool foundMatch = false;
+			try
+			{
+				if (Regex.IsMatch(pc, "\\A[ABCEGHJKLMNPRSTVXY]\\d[A-Z] ?\\d[A-Z]\\d\\z"))
+				{
+					foundMatch = true;
+				}
+				else
+				{
+					Console.WriteLine($"Incorrect Canadian Post Code: {pc}. Make sure Post code is in format: A1A 1A1.");
+				}
+			}
+			catch (ArgumentException ex)
+			{
+				Console.WriteLine($"Incorrect Canadian Post Code. Make sure Post code is in format: A1A 1A1.\n{ex.Message}");
+			}
+
+			return foundMatch;
 		}
 	}
 }
