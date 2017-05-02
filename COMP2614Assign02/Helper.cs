@@ -21,16 +21,16 @@ namespace COMP2614Assign02
 			StringBuilder sb = new StringBuilder();
 			Console.Write($"{"First Name:\t"}");
 			var fName = Console.ReadLine().Trim() + "|";
-			sb.Append(char.ToUpper(fName[0]) + fName.Substring(1));
+			sb.Append(char.ToUpper(fName[0]) + fName.Substring(1).ToLower());
 			Console.Write($"{"Last Name:\t"}",5);
 			var lName = Console.ReadLine() + "|";
-			sb.Append(char.ToUpper(lName[0]) + lName.Substring(1));
+			sb.Append(char.ToUpper(lName[0]) + lName.Substring(1).ToLower());
 			Console.Write("Address:\t");
 			var address = Console.ReadLine() + "|";
 			sb.Append(address);
 			Console.Write("City:\t\t");
 			var city = Console.ReadLine() + "|";
-			sb.Append(char.ToUpper(city[0]) + city.Substring(1));
+			sb.Append(char.ToUpper(city[0]) + city.Substring(1).ToLower());
 			Console.Write("Province:\t");
 			var province = Console.ReadLine() + "|";
 			sb.Append(province.ToUpper());
@@ -59,9 +59,11 @@ namespace COMP2614Assign02
 			Console.WriteLine("\nContacts\n------------------------------");
 		}
 
-		public List<Contact> getData(string contact)
+		//Changing from List<Contact> to Contact[] to conform with Assingnment requirements;
+		//Preferrable return IEnumerable<Contact> interface;
+		public Contact[] getData(string contact)
 		{
-			var contacts = new List<Contact>();
+			var contacts = new Contact[3];
 			var details = contact.Split('|');
 
 			Contact c = new Contact();
@@ -73,11 +75,11 @@ namespace COMP2614Assign02
 			c.Province = details[4];
 			c.PostalCode = details[5];
 
-			contacts.Add(c);
+			contacts[0] = c;
 
 			c = new Contact(details[0], details[1], details[2], details[3], details[4], details[5]);
 
-			contacts.Add(c);
+			contacts[1] = c;
 
 			c  = new Contact
 			{
@@ -89,12 +91,13 @@ namespace COMP2614Assign02
 				PostalCode = details[5]
 			};
 
-			contacts.Add(c);
+			contacts[2] = c;
 	
 			return contacts;
 		}
 
-		public void printResult(List<Contact> data)
+		//Changing parameter from List<Contact> to Interface so either List<Conact> or Contact[] can be passed on;
+		public void printResult(IEnumerable<Contact> data)
 		{
 			if (data != null)
 			{
@@ -133,7 +136,7 @@ namespace COMP2614Assign02
 		{
 			if (c != null)
 			{
-				Console.WriteLine($"{c.FirstName} {c.LastName}");
+				Console.WriteLine($"{c.ToString()}"); // or just Console.WriteLine($"{c.FirstName} {c.LastName}");
 				Console.WriteLine(c.Address);
 				Console.WriteLine($"{c.City} {c.Province.ToUpper()}  {c.PostalCode.ToUpper()}");
 			}
