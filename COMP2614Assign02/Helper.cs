@@ -21,19 +21,19 @@ namespace COMP2614Assign02
 			StringBuilder sb = new StringBuilder();
 			Console.Write($"{"First Name:\t"}");
 			var fName = Console.ReadLine().Trim() + "|";
-			sb.Append(fName);
+			sb.Append(char.ToUpper(fName[0]) + fName.Substring(1));
 			Console.Write($"{"Last Name:\t"}",5);
 			var lName = Console.ReadLine() + "|";
-			sb.Append(lName);
+			sb.Append(char.ToUpper(lName[0]) + lName.Substring(1));
 			Console.Write("Address:\t");
 			var address = Console.ReadLine() + "|";
 			sb.Append(address);
 			Console.Write("City:\t\t");
 			var city = Console.ReadLine() + "|";
-			sb.Append(city);
+			sb.Append(char.ToUpper(city[0]) + city.Substring(1));
 			Console.Write("Province:\t");
 			var province = Console.ReadLine() + "|";
-			sb.Append(province);
+			sb.Append(province.ToUpper());
 
 			var pc = String.Empty;
 			do
