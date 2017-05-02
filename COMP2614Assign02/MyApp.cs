@@ -16,11 +16,21 @@ namespace COMP2614Assign02
 		public static void Run()
 		{
 			Helper myHelper = new Helper();
-			myHelper.printHeader();
-			var inputData = myHelper.getUserInput();
-			var data = myHelper.getData(inputData);
-			myHelper.printFooter();
-			myHelper.printResult(data);
+			char answer;
+
+			do
+			{
+				myHelper.printHeader();
+				var inputData = myHelper.getUserInput();
+				var data = myHelper.getData(inputData);
+				myHelper.printFooter();
+				myHelper.printResult(data);
+				answer = myHelper.prompt();
+
+			} while (answer == char.ToLower('y'));
+
+			myHelper.exit();
+			
 		}
 	}
 }

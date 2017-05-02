@@ -3,40 +3,37 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
+/// <summary>
+/// RegEx source: http://stackoverflow.com/questions/14942602/c-validation-for-us-or-canadian-zip-code
+/// </summary>
 namespace COMP2614Assign02
 {
+	/// <summary>
+	/// Krzysztf Szczurowski
+	/// Helper method wrapping all functionl logic of this small app
+	/// repo address: https://github.com/kriss3/BCIT_WinAppDev_2614_COMP2614Assign02.git
+	/// </summary>
 	public class Helper
 	{
-		public enum Province
-		{
-			Alberta,	// = "AB",
-			BC,			//British Columbia,// = "BC",
-			MB,			//"Manitoba" = "MB",
-			NB,			//"New Brunswick"= "NB",
-			NL,			//"Newfoundland and Labrador"= "NL",
-			NT,			//"Northwest Territories"= "NT",
-			NS,			// "Nova Scotia"= "NS",
-			NU,			//"Nunavut"= "NU",
-			ON,			//"Ontario"= "ON",
-			PE,			//"Prince Edward Island"= "PE",
-			QC,			//"Québec"= "QC",
-			SK,			//"Saskatchewan"= "SK",
-			YT			// "Yukon Territory"= "YT"
-		}
-
+		#region Public Methods
 		public string getUserInput()
 		{
 			StringBuilder sb = new StringBuilder();
 			Console.Write($"{"First Name:\t"}");
-			sb.Append(Console.ReadLine() + "|");
+			var fName = Console.ReadLine().Trim() + "|";
+			sb.Append(fName);
 			Console.Write($"{"Last Name:\t"}",5);
-			sb.Append(Console.ReadLine() + "|");
+			var lName = Console.ReadLine() + "|";
+			sb.Append(lName);
 			Console.Write("Address:\t");
-			sb.Append(Console.ReadLine() + "|");
+			var address = Console.ReadLine() + "|";
+			sb.Append(address);
 			Console.Write("City:\t\t");
-			sb.Append(Console.ReadLine() + "|");
+			var city = Console.ReadLine() + "|";
+			sb.Append(city);
 			Console.Write("Province:\t");
-			sb.Append(Console.ReadLine() + "|");
+			var province = Console.ReadLine() + "|";
+			sb.Append(province);
 
 			var pc = String.Empty;
 			do
@@ -51,9 +48,9 @@ namespace COMP2614Assign02
 			return sb.ToString();
 		}
 
-
 		public void printHeader()
 		{
+			Console.Clear();
 			Console.WriteLine("Contact Information\n------------------------------");
 		}
 
@@ -112,9 +109,26 @@ namespace COMP2614Assign02
 			{
 				Console.WriteLine("Something went wrong, data empty");
 			}
+		}
+
+		public char prompt()
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.Write("Would you like to try again? [Y/N]: ");
+			Console.ForegroundColor = ConsoleColor.Gray;
+			return Char.ToLower(Console.ReadKey().KeyChar);
+		}
+
+		public void exit()
+		{
+			Console.Clear();
+			Console.WriteLine("\nThank you! Press any key to exit.");
 			Console.ReadLine();
 		}
 
+		#endregion
+
+		#region Private Methods
 		private void PrintContact(Contact c)
 		{
 			if (c != null)
@@ -129,27 +143,32 @@ namespace COMP2614Assign02
 			}
 			
 		}
-
+		
 		private bool isValidPostCode(string pc)
 		{
 			bool foundMatch = false;
+			string cadRegEx =  @"^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$";
 			try
 			{
-				if (Regex.IsMatch(pc, "\\A[ABCEGHJKLMNPRSTVXY]\\d[A-Z] ?\\d[A-Z]\\d\\z"))
+				if (Regex.IsMatch(pc, cadRegEx))
 				{
 					foundMatch = true;
 				}
 				else
 				{
-					Console.WriteLine($"Incorrect Canadian Post Code: {pc}. Make sure Post code is in format: A1A 1A1.");
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.WriteLine($"Incorrect Canadian Post Code: \"{pc}\". Make sure Post code is valid and in format: A1A 1A1 or A1A1A1.");
+					Console.ForegroundColor = ConsoleColor.Gray;
 				}
 			}
-			catch (ArgumentException ex)
+			catch (Exception ex)
 			{
-				Console.WriteLine($"Incorrect Canadian Post Code. Make sure Post code is in format: A1A 1A1.\n{ex.Message}");
+				Console.WriteLine($"Incorrect Canadian Post Code.\n{ex.Message}");
 			}
 
 			return foundMatch;
 		}
+		
+		#endregion
 	}
 }
