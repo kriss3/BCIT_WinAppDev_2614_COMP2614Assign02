@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace COMP2614Assign02
 {
+	/// <summary>
+	/// Main App entry;
+	/// Krzysztof Szczurowski;
+	/// Repo address: https://github.com/kriss3/BCIT_WinAppDev_2614_COMP2614Assign02.git
+	/// </summary>
 	class MyApp
 	{
 		static void Main(string[] args)
